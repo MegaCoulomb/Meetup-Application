@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 const index = (props) => {
     const {event} = props
-    console.log(event)
     return (
         <MainWrapper>
             <h2>Details</h2>
@@ -15,7 +14,6 @@ const index = (props) => {
 export default index;
 
 const MainWrapper = styled.div`
-    background: #F6F7F8;
     margin: 0;
     display: flex;
     flex-direction: column;

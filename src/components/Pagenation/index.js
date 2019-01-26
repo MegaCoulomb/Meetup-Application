@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 class index extends Component {
     render() {
-        console.log(this.props)
         const {index, length} = this.props
         return (
             <Wrapper>

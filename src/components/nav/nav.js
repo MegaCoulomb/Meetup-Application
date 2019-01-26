@@ -26,6 +26,7 @@ const Wrapper = styled.div`
     align-items: center;
     height: 10vh;
     border-bottom: 3px solid rgba(225, 225, 225, .8);
+    background: #fff;
 
     h2 {
         text-indent: 1em;
