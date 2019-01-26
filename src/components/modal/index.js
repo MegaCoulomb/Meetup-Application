@@ -29,7 +29,7 @@ const Container = styled.div`
 const Sub = styled.div`
   position: fixed;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   background: white;
   height: ${props => props.height || "50vh"};

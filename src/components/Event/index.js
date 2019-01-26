@@ -33,5 +33,6 @@ const MainWrapper = styled.div`
     .innerHTML {
         width: 50vw;
         line-height: 2em;
+        margin-bottom: 5vh;
     }
 `

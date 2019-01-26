@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 import Event from '../components/event/index';
 import Location from '../components/location/index';
-import Nav from '../components/nav/nav';
+import Nav from '../components/nav/index';
 import Reservation from '../components/reservation/index';
 
 const urlOne =
@@ -37,12 +37,12 @@ class App extends Component {
   pagination = async num => {
     const {REACT_APP_API_KEY} = process.env
     await this.setState({ index: this.state.index + num }, () => this.setState({eventId: this.state.events[this.state.index].id}));
-    await this.getEvents(`${urlOne}/${this.state.eventId}/rsvps${urlTwo}${REACT_APP_API_KEY}`, 'rsvp');
     await window.scroll({ top: 0, behavior: 'smooth' });
+    await this.getEvents(`${urlOne}/${this.state.eventId}/rsvps${urlTwo}${REACT_APP_API_KEY}`, 'rsvp');
   }
 
   addRsvp = (img, name) => {
-    const obj = {response: 'yes', member: {id: this.state.rsvp[0].member.id +1, name, photo: {highres_link: img}}}
+    const obj = {response: 'yes', member: {id: this.state.rsvp[0].member.id +1, name, photo: {highres_link: img, type: 'member'}}}
     const newArr = [obj, ...this.state.rsvp]
     this.setState({rsvp: newArr})
   }

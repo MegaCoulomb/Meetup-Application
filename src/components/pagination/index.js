@@ -12,16 +12,16 @@ const index = props => {
   const map = arr.map(e => <Dot e={e} index={index} key={e} />);
   return (
     <Wrapper>
-      <button disabled={!index && true} onClick={() => props.pagination(-1)}>
+      <Btn disabled={!index && true} onClick={() => props.pagination(-1)}>
         Previous
-      </button>
+      </Btn>
       <div>{map}</div>
-      <button
+      <Btn
         disabled={!(index < length - 1) && true}
         onClick={() => props.pagination(1)}
       >
         Next
-      </button>
+      </Btn>
     </Wrapper>
   );
 };
@@ -33,12 +33,24 @@ const Wrapper = styled.div`
   width: 50vw;
   justify-content: space-around;
   align-items: center;
+  padding-bottom: 3vh;
+  border-bottom: 2px solid rgba(225, 225, 225, .8);
 
   div {
     display: flex;
     justify-content: space-around;
   }
 `;
+
+export const Btn = styled.button`
+  border-color: rgba(225, 225, 225, .8);
+  padding: .5em 1em;
+
+  &:hover {
+    background: ${props => !props.disabled && '#F6F7F8'};
+    cursor: pointer;
+  }
+`
 
 const Dot = styled.div`
   height: 10px;

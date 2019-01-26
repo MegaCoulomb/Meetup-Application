@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import moment from 'moment';
 import styled, {css} from 'styled-components';
+import {Btn} from '../pagination/index';
 
 import Modal from '../modal/index';
 
@@ -37,33 +38,44 @@ class Location extends Component {
           closeModal={this.closeModal}
           modal={this.state.modal}
         >
-          <Container>
+          <Container secondary>
             <h2>Complete your Reservation</h2>
-            <input name="img" type="text" onChange={this.handleChange}/>
-            <input 
-              name="rsvpName"
-              type="text"
-              onChange={this.handleChange}
-              onKeyDown={this.keyDown}
-            />
-            <button onClick={this.join}>
+            <Container>
+              <Text>Profile Image</Text>
+              <input name="img" type="text" onChange={this.handleChange}/>
+            </Container>
+            <Container>
+              <Text>Name</Text>
+              <input 
+                name="rsvpName"
+                type="text"
+                onChange={this.handleChange}
+                onKeyDown={this.keyDown}
+              />
+            </Container>
+            <Btn onClick={this.join}>
               Join Waitlist!
-            </button>
+            </Btn>
           </Container>
         </Modal>
         <MapWrapper>
-          <Container>
-            <Text>{moment(event.local_date).format('dddd, MMMM D, YYYY')}</Text>
-            <Text>{moment(+event.local_time).format('LT')}</Text>
-            <Text secondary>Every 2nd Tuesday of the Month</Text>
-            <Text third>Add to Calendar</Text>
+          <Container main >
+            <Img main src='https://www.flaticon.com/premium-icon/icons/svg/519/519869.svg' alt='Clock' />
+            <Container>
+              <Text>{moment(event.local_date).format('dddd, MMMM D, YYYY')}</Text>
+              <Text>7:00 - 9:00</Text>
+              <Text secondary>Every 2nd Tuesday of the Month</Text>
+            </Container>
           </Container>
-          <Container>
-            <Text>{name}</Text>
-            <Text secondary>{address_1} {address_2}</Text>
-            <Text secondary>{city}, {state.toUpperCase()}</Text>
+          <Container main>
+            <Img main src='https://image.flaticon.com/icons/svg/67/67347.svg' alt='Map Marker' />
+            <Container>
+              <Text>{name}</Text>
+              <Text secondary>{address_1} {address_2}</Text>
+              <Text secondary>{city}, {state.toUpperCase()}</Text>
+            </Container>
           </Container>
-          <GoogleMapReact defaultCenter={center} defaultZoom={11}>
+          <GoogleMapReact center={center} defaultZoom={11}>
             <Marker lat={lat} lng={lon} />
           </GoogleMapReact>
         </MapWrapper>
@@ -78,7 +90,7 @@ const Marker = () => <Img src="https://image.flaticon.com/icons/svg/149/149059.s
 
 const MapWrapper = styled.div`
   position: sticky;
-  top: 0;
+  top: 3vh;
   width: 25vw;
   height: 40vh;
   background: ${props => !props.main && '#fff'};
@@ -102,17 +114,25 @@ const MapWrapper = styled.div`
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${props => !(props.main) && 'column'};
+  margin: ${props => !(props.main) && '2vh 0'};
+  align-items: ${props => props.main && 'center'};
 
   h2 {
     color: #00A2C7;
   }
+
+  ${props => props.secondary && css`
+    height: 60%;
+    justify-content: space-around;
+  `}
 `
 
 const Img = styled.img`
   height: 30px;
   width: 30px;
-`;
+  margin: ${props => props.main && '0 2vw'};
+`
 
 const Text = styled.p`
   color: ${props => props.secondary && '#ACB3B7'};

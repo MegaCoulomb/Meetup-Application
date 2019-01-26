@@ -5,8 +5,10 @@ import Modal from '../modal/index';
 
 class Reservation extends Component {
   state = {
+    id: 'attending',
     modal: false,
-    rsvp: this.props.rsvp
+    rsvp: this.props.rsvp,
+    toggle: false
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -19,6 +21,15 @@ class Reservation extends Component {
   }
 
   closeModal = e => e.target.id === 'modal' && this.setState({ modal: false })
+
+  toggle = e => {
+    const { id } = e.target
+    document.getElementById(this.state.id).style.borderBottom = 'none'
+      document.getElementById(id).style.borderBottom = '1px solid #00A2C7'
+    e.target.innerText === 'Attending' 
+      ? this.setState({toggle: false, id})
+      : this.setState({toggle: true, id})
+  }
 
   map = val => {
     return val.map(e => {
@@ -40,9 +51,10 @@ class Reservation extends Component {
   };
 
   render() {
-    const { rsvp } = this.state;
+    const { rsvp, toggle } = this.state;
 
     const filter = rsvp.filter(e => e.response === 'yes').sort((a,b) => a.created - b.created)
+    const waitlist = rsvp.filter(e => e.response === 'waitlist').sort((a,b) => a.created - b.created)
     return (
       <Wrapper main>
         <Section>
@@ -59,7 +71,12 @@ class Reservation extends Component {
           height='80vh'
           width='80vw'
         >
-          {this.map(rsvp)}
+          <Text id='attending' onClick={this.toggle}>Attending</Text>
+          <Text id='waitlist' onClick={this.toggle}>Waitlist</Text>
+          <Text main>({(toggle ? waitlist.length : filter.length)})</Text>
+          <Wrapper>
+            {this.map(toggle ? waitlist : filter)}
+          </Wrapper>
         </Modal>
       </Wrapper>
     );
@@ -74,7 +91,20 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   width: ${props => props.main && '50vw'};
   margin-top: ${props => props.main && '5vh'};
+  flex-direction: ${props => props.secondary && 'column'};
 `;
+
+const Text = styled.p`
+  margin: 1em;
+  cursor: pointer;
+  font-weight: ${props => props.main && '600'};
+  margin-left: ${props => props.main && '3em'};
+
+  &#attending {
+    border-bottom: 1px solid #00A2C7;
+  }
+  
+`
 
 const Section = styled.div`
   display: flex;
@@ -83,6 +113,10 @@ const Section = styled.div`
 
   p {
     cursor: pointer;
+  }
+
+  h4 {
+    font-weight: 300;
   }
 `
 

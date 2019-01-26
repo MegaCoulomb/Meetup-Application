@@ -17,6 +17,10 @@ a {
   color: #00A2C7;
 }
 
+/* .focus {
+  border-bottom: 1px solid #F6F7F8;
+} */
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
