@@ -9,7 +9,7 @@ const baseUrl = 'https://cors-anywhere.herokuapp.com/https://api.meetup.com/reac
 
 class App extends Component {
   state = {
-    event: [],
+    events: [],
     index: 0,
     url: `${baseUrl}?&sign=true&photo-host=public&key=${process.env.REACT_APP_API_KEY}`,
     rsvp: `${baseUrl}/pbbdwnyzdbqb/rsvps?&sign=true&photo-host=public&key=${process.env.REACT_APP_API_KEY}`
@@ -25,18 +25,20 @@ class App extends Component {
     ))
       .json()
       .then(results => {
-        this.setState({event: results})
+        this.setState({events: results})
       });
   };
 
+  pagenation = (num) => this.setState({index: this.state.index + num})
+
   render() {
-    const {event, index} = this.state
+    const {events, index} = this.state
 
     return (
         <>
         <Nav />
-           { event.length !==0 && <Event event={event[index]}/> }
-          <Pagenation index={index}/>
+           { events.length !==0 && <Event event={events[index]}/> }
+          <Pagenation index={index} length={events.length} pagenation={this.pagenation}/>
         </>
     );
   }
