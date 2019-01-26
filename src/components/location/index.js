@@ -11,21 +11,19 @@ const Location = props => {
     lng: lon
   };
 
-  console.log(event)
-
   return (
     <MapWrapper>
-        <Container>
-      <Text>{moment(event.local_date).format('dddd, MMMM D, YYYY')}</Text>
-      <Text>{moment(+event.local_time).format('LT')}</Text>
+      <Container>
+        <Text>{moment(event.local_date).format('dddd, MMMM D, YYYY')}</Text>
+        <Text>{moment(+event.local_time).format('LT')}</Text>
         <Text secondary>Every 2nd Tuesday of the Month</Text>
         <Text third>Add to Calendar</Text>
-        </Container>
-        <Container>
+      </Container>
+      <Container>
         <Text>{name}</Text>
         <Text secondary>{address_1} {address_2}</Text>
         <Text secondary>{city}, {state.toUpperCase()}</Text>
-        </Container>
+      </Container>
       <GoogleMapReact defaultCenter={center} defaultZoom={11}>
         <Marker lat={lat} lng={lon} />
       </GoogleMapReact>
@@ -35,16 +33,12 @@ const Location = props => {
 
 export default Location;
 
-const Marker = () => {
-  return (
-    <Img
-      src="https://image.flaticon.com/icons/svg/149/149059.svg"
-      alt="Map marker"
-    />
-  );
-};
+const Marker = () => <Img src="https://image.flaticon.com/icons/svg/149/149059.svg" alt="Marker" />
 
 const MapWrapper = styled.div`
+  margin: 5vh 0 0 3vh;
+  position: sticky;
+  top: 0;
   width: 25vw;
   height: 40vh;
   border-radius: 10px;
@@ -53,8 +47,8 @@ const MapWrapper = styled.div`
 `;
 
 const Container = styled.div`
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 `
 
 const Img = styled.img`
@@ -63,10 +57,7 @@ const Img = styled.img`
 `;
 
 const Text = styled.p`
-    color: ${props => props.secondary && '#ACB3B7'};
-    margin: .25em 0;
-    text-indent: 10px;
+  color: ${props => props.secondary && '#ACB3B7'};
+  margin: .25em 0;
+  text-indent: 10px;
 `
-
-
-    // color: #00A2C7;

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import styled, {css} from 'styled-components';
-
+import styled, { css } from 'styled-components';
 
 import Event from '../components/event/index';
 import Location from '../components/location/index';
 import Nav from '../components/nav/nav';
-import Pagenation from '../components/pagenation/index';
+import Pagination from '../components/pagination/index';
 import Reservation from '../components/reservation/index';
 import '../App.css';
 
@@ -35,11 +34,12 @@ class App extends Component {
     });
   };
 
-  pagenation = num => this.setState({ index: this.state.index + num });
+  pagination = num => this.setState({ index: this.state.index + num });
 
   render() {
     const { events, rsvp, index } = this.state;
 
+    console.log(window.innerHeight)
     return (
       <>
         <Nav />
@@ -49,16 +49,16 @@ class App extends Component {
               <Event event={events[index]} />
               <Location event={events[index]} />
             </Wrapper>
+            <Pagination
+              index={index}
+              length={events.length}
+              pagination={this.pagination}
+            />
             <Wrapper secondary>
               <Reservation rsvp={rsvp} />
             </Wrapper>
           </Wrapper>
         )}
-        <Pagenation
-          index={index}
-          length={events.length}
-          pagenation={this.pagenation}
-        />
       </>
     );
   }
@@ -68,22 +68,14 @@ export default App;
 
 const Wrapper = styled.div`
   display: flex;
+  justify-content: ${props => (props.secondary ? 'flex-start' : 'center')};
 
   ${props =>
     props.main &&
     css`
-width: 80vw;
+      width: 80vw;
       justify-content: center;
       margin: auto;
       flex-direction: column;
     `};
-
-  ${props =>
-    props.secondary &&
-    css`
-      width: 80vw;
-      justify-content: center;
-      margin: auto;
-    `};
-
 `;
