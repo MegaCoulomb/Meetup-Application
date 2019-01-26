@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
+import moment from 'moment';
 
 import Event from '../components/event/index';
+import Footer from '../components/footer/index';
+import Loading from '../components/loading/index';
 import Location from '../components/location/index';
 import Nav from '../components/nav/index';
 import Reservation from '../components/reservation/index';
@@ -42,27 +45,48 @@ class App extends Component {
   }
 
   addRsvp = (img, name) => {
-    const obj = {response: 'yes', member: {id: this.state.rsvp[0].member.id +1, name, photo: {highres_link: img, type: 'member'}}}
+    const obj = {
+      response: 'yes', 
+      member: {
+        id: this.state.rsvp[0].member.id +1, 
+        name, 
+        photo: 
+          { photo_link: img.includes('http') 
+            ? img 
+            : 'https://stock.wikimini.org/w/images/9/95/Gnome-stock_person-avatar-profile.png', 
+            type: 'member'}
+          }
+        }
     const newArr = [obj, ...this.state.rsvp]
     this.setState({rsvp: newArr})
   }
 
   render() {
     const { events, rsvp, index } = this.state;
+    const date = moment(!!events.length && events[index].local_date, 'YYYY-M-D').format('dddd, MMMM D, YYYY')
+
     return (
       <>
         <Nav />
-        {!!events.length && (
+        {!!events.length ? (
           <Wrapper main>
+            <Container>
+                <h2>{events[index].name}</h2>
+                <p>{date}</p>
+            </Container>
             <Wrapper>
               <Event index={index} length={events.length} event={events[index]} pagination={this.pagination}/>
-              <Location addRsvp={this.addRsvp} event={events[index]} />
+              <Location date={date} addRsvp={this.addRsvp} event={events[index]} />
             </Wrapper>
             <Wrapper secondary>
               <Reservation rsvp={rsvp} />
             </Wrapper>
           </Wrapper>
-        )}
+        )
+          : 
+          <Loading />
+      }
+        <Footer />
       </>
     );
   }
@@ -84,3 +108,13 @@ const Wrapper = styled.div`
       padding-bottom: 8vh;
     `};
 `;
+
+const Container = styled.div`
+  width: 50vw;
+  border-radius: 10px;
+  background: #e8e8e8;
+  margin: 3vh 0;
+  padding: 1vh 1vw;
+  position: sticky;
+  top: 3vh;
+`

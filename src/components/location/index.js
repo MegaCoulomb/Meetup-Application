@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
-import moment from 'moment';
 import styled, {css} from 'styled-components';
 import {Btn} from '../pagination/index';
 
@@ -26,11 +25,12 @@ class Location extends Component {
 
   render(){
     const { lat, lon, name, address_1, address_2, city, state } = this.props.event.venue;
-    const { event } = this.props;
+    const { date } = this.props;
     const center = {
       lat,
       lng: lon
     };
+
     return (
       <MapWrapper main>
         <h3 onClick={() => this.setState({modal: true})}>Join the waitlist!</h3>
@@ -42,7 +42,7 @@ class Location extends Component {
             <h2>Complete your Reservation</h2>
             <Container>
               <Text>Profile Image</Text>
-              <input name="img" type="text" onChange={this.handleChange}/>
+              <input autoFocus name="img" type="text" onChange={this.handleChange}/>
             </Container>
             <Container>
               <Text>Name</Text>
@@ -62,7 +62,7 @@ class Location extends Component {
           <Container main >
             <Img main src='https://www.flaticon.com/premium-icon/icons/svg/519/519869.svg' alt='Clock' />
             <Container>
-              <Text>{moment(event.local_date).format('dddd, MMMM D, YYYY')}</Text>
+              <Text>{date}</Text>
               <Text>7:00 - 9:00</Text>
               <Text secondary>Every 2nd Tuesday of the Month</Text>
             </Container>
@@ -104,11 +104,19 @@ const MapWrapper = styled.div`
   h3 {
     text-align: center;
     margin: 1vh 0;
+    border-radius: 10px;
+    background: #e8e8e8;
+    padding: 1vh 1vw;
+    margin-top: 0;
     cursor: pointer;
   }
 
   h3:hover{
     color: #00A2C7;
+  }
+
+  h3:active{
+    transform: scale(.98);
   }
 `;
 

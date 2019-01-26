@@ -38,7 +38,7 @@ class Reservation extends Component {
         <Cont key={id}>
           <img
             src={
-             (photo && photo.highres_link) ||
+             (!!photo && photo.photo_link) ||
               'https://stock.wikimini.org/w/images/9/95/Gnome-stock_person-avatar-profile.png'
             }
             alt="Attendee avatar"
