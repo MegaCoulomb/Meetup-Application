@@ -1,12 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Pagination from '../pagination/index';
+
 const index = (props) => {
     const {event} = props
     return (
         <MainWrapper>
             <h2>Details</h2>
             <div className='innerHTML' dangerouslySetInnerHTML={{ __html: event.description }} />
+            <Pagination
+              index={props.index}
+              length={props.length}
+              pagination={props.pagination}
+            />
         </MainWrapper>
     );
 };

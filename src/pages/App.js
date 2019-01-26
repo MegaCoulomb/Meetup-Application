@@ -4,9 +4,7 @@ import styled, { css } from 'styled-components';
 import Event from '../components/event/index';
 import Location from '../components/location/index';
 import Nav from '../components/nav/nav';
-import Pagination from '../components/pagination/index';
 import Reservation from '../components/reservation/index';
-import '../App.css';
 
 const baseUrl =
   'https://cors-anywhere.herokuapp.com/https://api.meetup.com/reactjs-dallas/events';
@@ -34,26 +32,23 @@ class App extends Component {
     });
   };
 
-  pagination = num => this.setState({ index: this.state.index + num });
+  pagination = num => {
+    this.setState({ index: this.state.index + num });
+    window.scroll({ top: 0, behavior: 'smooth' });
+  }
 
   render() {
     const { events, rsvp, index } = this.state;
 
-    console.log(window.innerHeight)
     return (
       <>
         <Nav />
         {!!events.length && (
           <Wrapper main>
             <Wrapper>
-              <Event event={events[index]} />
+              <Event index={index} length={events.length} event={events[index]} pagination={this.pagination}/>
               <Location event={events[index]} />
             </Wrapper>
-            <Pagination
-              index={index}
-              length={events.length}
-              pagination={this.pagination}
-            />
             <Wrapper secondary>
               <Reservation rsvp={rsvp} />
             </Wrapper>

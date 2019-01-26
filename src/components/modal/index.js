@@ -2,7 +2,6 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 
 const modal = ({ closeModal, modal, children }) => {
-  console.log(children);
   return (
     modal && (
       <Container id="modal" onClick={closeModal}>
