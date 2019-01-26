@@ -45,17 +45,19 @@ class Reservation extends Component {
     const filter = rsvp.filter(e => e.response === 'yes').sort((a,b) => a.created - b.created)
     return (
       <Wrapper main>
-      <Section>
-        <h2>Attendees({filter.length})</h2>
-        <p onClick={() => this.setState({ modal: true })}>Show all</p>
-      </Section>
-      <Section>
-        <h4>{rsvp.length-filter.length} on waitlist</h4>
-      </Section>
+        <Section>
+          <h2>Attendees({filter.length})</h2>
+          <p onClick={() => this.setState({ modal: true })}>Show all</p>
+        </Section>
+        <Section>
+          <h4>{rsvp.length-filter.length} on waitlist</h4>
+        </Section>
         <Wrapper>{this.map(filter.slice(0, 9))}</Wrapper>
         <Modal
           closeModal={this.closeModal}
           modal={this.state.modal}
+          height='80vh'
+          width='80vw'
         >
           {this.map(rsvp)}
         </Modal>
@@ -70,7 +72,6 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-
   width: ${props => props.main && '50vw'};
   margin-top: ${props => props.main && '5vh'};
 `;

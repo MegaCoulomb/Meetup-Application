@@ -1,11 +1,12 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-const modal = ({ closeModal, modal, children }) => {
+const modal = ({ closeModal, modal, height, width, children }) => {
+// console.log(props)
   return (
     modal && (
       <Container id="modal" onClick={closeModal}>
-        <Sub>
+        <Sub height={height} width={width}>
           <Sub secondary>{children}</Sub>
         </Sub>
       </Container>
@@ -31,8 +32,8 @@ const Sub = styled.div`
   justify-content: center;
   align-items: center;
   background: white;
-  width: 80vw;
-  height: 80vh;
+  height: ${props => props.height || "50vh"};
+  width: ${props => props.width || "50vw"};
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

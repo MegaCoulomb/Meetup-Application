@@ -6,35 +6,39 @@ import Location from '../components/location/index';
 import Nav from '../components/nav/nav';
 import Reservation from '../components/reservation/index';
 
-const baseUrl =
+const urlOne =
   'https://cors-anywhere.herokuapp.com/https://api.meetup.com/reactjs-dallas/events';
+
+const urlTwo = '?&sign=true&photo-host=public&key='
 
 class App extends Component {
   state = {
+    eventId: 'pbbdwnyzdbqb',
     events: [],
-    rsvp: [],
     index: 0,
-    url: `${baseUrl}?&sign=true&photo-host=public&key=${
-      process.env.REACT_APP_API_KEY
-    }`,
-    reservation: `${baseUrl}/pbbdwnyzdbqb/rsvps?&sign=true&photo-host=public&key=${
-      process.env.REACT_APP_API_KEY
-    }`
+    rsvp: [],
   };
+
   componentDidMount() {
-    this.getEvents(this.state.url, 'events');
-    this.getEvents(this.state.reservation, 'rsvp');
+    const {REACT_APP_API_KEY} = process.env
+    this.getEvents(`${urlOne}${urlTwo}${REACT_APP_API_KEY}`, 'events');
+    this.getEvents(`${urlOne}/${this.state.eventId}/rsvps${urlTwo}${REACT_APP_API_KEY}`, 'rsvp');
   }
 
   getEvents = async (url, state) => {
     (await fetch(url)).json().then(results => {
       this.setState({ [state]: results });
+      if(state === 'events') {
+        this.setState({eventId: this.state.events[this.state.index].id})
+      }
     });
   };
 
-  pagination = num => {
-    this.setState({ index: this.state.index + num });
-    window.scroll({ top: 0, behavior: 'smooth' });
+  pagination = async num => {
+    const {REACT_APP_API_KEY} = process.env
+    await this.setState({ index: this.state.index + num }, () => this.setState({eventId: this.state.events[this.state.index].id}));
+    await this.getEvents(`${urlOne}/${this.state.eventId}/rsvps${urlTwo}${REACT_APP_API_KEY}`, 'rsvp');
+    await window.scroll({ top: 0, behavior: 'smooth' });
   }
 
   addRsvp = (img, name) => {

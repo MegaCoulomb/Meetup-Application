@@ -16,52 +16,61 @@ class Location extends Component {
 
   handleChange = e => this.setState({[e.target.name]: e.target.value})
 
+  keyDown = (e) => e.key === 'Enter' && this.join()
+
+  join = () => {
+    const {img, rsvpName} = this.state
+    this.setState({modal: false}, () => this.props.addRsvp(img, rsvpName))
+  }
+
   render(){
     const { lat, lon, name, address_1, address_2, city, state } = this.props.event.venue;
-    const { event, addRsvp } = this.props;
-    const {img, rsvpName} = this.state
+    const { event } = this.props;
     const center = {
       lat,
       lng: lon
     };
     return (
-
       <MapWrapper main>
-      <h3 onClick={() => this.setState({modal: true})}>Join the waitlist!</h3>
-      <Modal
+        <h3 onClick={() => this.setState({modal: true})}>Join the waitlist!</h3>
+        <Modal
           closeModal={this.closeModal}
           modal={this.state.modal}
         >
-        <>
-        <input name="img" type="text" onChange={this.handleChange}/>
-        <input name="rsvpName" type="text" onChange={this.handleChange}/>
-        <button onClick={()=> this.setState({modal: false}, () => addRsvp(img, rsvpName))}>Join Waitlist!</button>
-        </>
+          <Container>
+            <h2>Complete your Reservation</h2>
+            <input name="img" type="text" onChange={this.handleChange}/>
+            <input 
+              name="rsvpName"
+              type="text"
+              onChange={this.handleChange}
+              onKeyDown={this.keyDown}
+            />
+            <button onClick={this.join}>
+              Join Waitlist!
+            </button>
+          </Container>
         </Modal>
-      <MapWrapper>
-  
-        <Container>
-          <Text>{moment(event.local_date).format('dddd, MMMM D, YYYY')}</Text>
-          <Text>{moment(+event.local_time).format('LT')}</Text>
-          <Text secondary>Every 2nd Tuesday of the Month</Text>
-          <Text third>Add to Calendar</Text>
-        </Container>
-        <Container>
-          <Text>{name}</Text>
-          <Text secondary>{address_1} {address_2}</Text>
-          <Text secondary>{city}, {state.toUpperCase()}</Text>
-        </Container>
-        <GoogleMapReact defaultCenter={center} defaultZoom={11}>
-          <Marker lat={lat} lng={lon} />
-        </GoogleMapReact>
+        <MapWrapper>
+          <Container>
+            <Text>{moment(event.local_date).format('dddd, MMMM D, YYYY')}</Text>
+            <Text>{moment(+event.local_time).format('LT')}</Text>
+            <Text secondary>Every 2nd Tuesday of the Month</Text>
+            <Text third>Add to Calendar</Text>
+          </Container>
+          <Container>
+            <Text>{name}</Text>
+            <Text secondary>{address_1} {address_2}</Text>
+            <Text secondary>{city}, {state.toUpperCase()}</Text>
+          </Container>
+          <GoogleMapReact defaultCenter={center} defaultZoom={11}>
+            <Marker lat={lat} lng={lon} />
+          </GoogleMapReact>
+        </MapWrapper>
       </MapWrapper>
-      </MapWrapper>
-  
     );
   }
 }
-
-
 
 export default Location;
 
@@ -94,6 +103,10 @@ const MapWrapper = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+
+  h2 {
+    color: #00A2C7;
+  }
 `
 
 const Img = styled.img`
