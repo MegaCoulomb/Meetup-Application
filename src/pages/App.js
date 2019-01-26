@@ -76,7 +76,7 @@ class App extends Component {
             </Container>
             <Wrapper>
               <Event index={index} length={events.length} event={events[index]} pagination={this.pagination}/>
-              <Location date={date} addRsvp={this.addRsvp} event={events[index]} />
+              <Location rsvp={rsvp.length} date={date} addRsvp={this.addRsvp} event={events[index]} />
             </Wrapper>
             <Wrapper secondary>
               <Reservation rsvp={rsvp} />

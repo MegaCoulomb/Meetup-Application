@@ -9,7 +9,17 @@ class Location extends Component {
   state = {
     img: '',
     modal: false,
-    rsvpName: ''
+    rsvpName: '',
+    rsvpNumber: this.props.rsvp
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props !== state) {
+      return {
+        rsvpNumber: props.rsvp
+      }
+    }
+    return null;
   }
 
   closeModal = e => e.target.id === 'modal' && this.setState({ modal: false })
@@ -31,9 +41,14 @@ class Location extends Component {
       lng: lon
     };
 
+    const count = this.state.rsvpNumber > 80
+      ? 'Join the Waitlist!'
+      : 'Attend the Event!'
+
+
     return (
       <MapWrapper main>
-        <h3 onClick={() => this.setState({modal: true})}>Join the waitlist!</h3>
+        <h3 onClick={() => this.setState({modal: true})}>{count}</h3>
         <Modal
           closeModal={this.closeModal}
           modal={this.state.modal}
@@ -53,9 +68,7 @@ class Location extends Component {
                 onKeyDown={this.keyDown}
               />
             </Container>
-            <Btn onClick={this.join}>
-              Join Waitlist!
-            </Btn>
+            <Btn onClick={this.join}>{count}</Btn>
           </Container>
         </Modal>
         <MapWrapper>
