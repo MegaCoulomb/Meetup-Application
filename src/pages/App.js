@@ -37,9 +37,14 @@ class App extends Component {
     window.scroll({ top: 0, behavior: 'smooth' });
   }
 
+  addRsvp = (img, name) => {
+    const obj = {response: 'yes', member: {id: this.state.rsvp[0].member.id +1, name, photo: {highres_link: img}}}
+    const newArr = [obj, ...this.state.rsvp]
+    this.setState({rsvp: newArr})
+  }
+
   render() {
     const { events, rsvp, index } = this.state;
-
     return (
       <>
         <Nav />
@@ -47,7 +52,7 @@ class App extends Component {
           <Wrapper main>
             <Wrapper>
               <Event index={index} length={events.length} event={events[index]} pagination={this.pagination}/>
-              <Location event={events[index]} />
+              <Location addRsvp={this.addRsvp} event={events[index]} />
             </Wrapper>
             <Wrapper secondary>
               <Reservation rsvp={rsvp} />
@@ -72,5 +77,6 @@ const Wrapper = styled.div`
       justify-content: center;
       margin: auto;
       flex-direction: column;
+      padding-bottom: 8vh;
     `};
 `;

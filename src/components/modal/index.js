@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const modal = ({ closeModal, modal, children }) => {
   return (
@@ -37,11 +37,11 @@ const Sub = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   overflow: scroll;
-flex-wrap: wrap;
-background: #F6F7F8;
+  flex-wrap: wrap;
+  background: #f6f7f8;
+  padding: 5vh 0;
 
-
-${props =>
+  ${props =>
     props.secondary &&
     css`
       display: flex;

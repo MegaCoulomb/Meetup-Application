@@ -5,12 +5,20 @@ import Modal from '../modal/index';
 
 class Reservation extends Component {
   state = {
-    modal: false
+    modal: false,
+    rsvp: this.props.rsvp
   };
 
-  closeModal = e => {
-    e.target.id === 'modal' && this.setState({ modal: false });
-  };
+  static getDerivedStateFromProps(props, state) {
+    if (props !== state) {
+      return {
+        rsvp: props.rsvp
+      }
+    }
+    return null;
+  }
+
+  closeModal = e => e.target.id === 'modal' && this.setState({ modal: false })
 
   map = val => {
     return val.map(e => {
@@ -19,7 +27,7 @@ class Reservation extends Component {
         <Cont key={id}>
           <img
             src={
-              photo && photo.highres_link ||
+             (photo && photo.highres_link) ||
               'https://stock.wikimini.org/w/images/9/95/Gnome-stock_person-avatar-profile.png'
             }
             alt="Attendee avatar"
@@ -32,19 +40,22 @@ class Reservation extends Component {
   };
 
   render() {
-    const { rsvp } = this.props;
+    const { rsvp } = this.state;
+
+    const filter = rsvp.filter(e => e.response === 'yes').sort((a,b) => a.created - b.created)
     return (
       <Wrapper main>
       <Section>
-
-        <h2>Attendees({rsvp.length})</h2>
+        <h2>Attendees({filter.length})</h2>
         <p onClick={() => this.setState({ modal: true })}>Show all</p>
       </Section>
-        <Wrapper>{this.map(rsvp.slice(0, 9))}</Wrapper>
+      <Section>
+        <h4>{rsvp.length-filter.length} on waitlist</h4>
+      </Section>
+        <Wrapper>{this.map(filter.slice(0, 9))}</Wrapper>
         <Modal
           closeModal={this.closeModal}
           modal={this.state.modal}
-          rsvp={rsvp}
         >
           {this.map(rsvp)}
         </Modal>
@@ -90,6 +101,7 @@ const Cont = styled.div`
     height: 5em;
     width: 5em;
     border-radius: 50%;
+    object-fit: cover;
   }
 
   p:nth-of-type(1) {
