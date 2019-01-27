@@ -65,6 +65,14 @@ const List = styled.ul`
     display: flex;
     justify-content: space-around;
     width: 45vw;
+
+    @media (max-width: 1000px) {
+        width: 70vw;
+      }
+
+      @media (max-width: 500px) {
+        width: 75vw;
+      }
 `
 
 const Li = styled.li`
@@ -76,6 +84,14 @@ const Li = styled.li`
     &:hover {
         color: #00A2C7;
     }
+
+    @media (max-width: 700px) {
+        font-size: .7em;
+      }
+
+      @media (max-width: 500px) {
+        font-size: .6em;
+      }
 `
 
 const Container = styled.div`

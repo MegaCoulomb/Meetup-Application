@@ -34,5 +34,9 @@ const MainWrapper = styled.div`
         width: 50vw;
         line-height: 2em;
         margin-bottom: 5vh;
+
+        @media (max-width: 1100px) {
+        width: auto;
+      }
     }
 `

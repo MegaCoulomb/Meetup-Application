@@ -29,14 +29,30 @@ const Wrapper = styled.div`
     img {
         height: 20px;
     }
+
+    @media (max-width: 1000px) {
+        font-size: .7em;
+      }
 `
 
 const Text = styled.p`
     margin-right: 5vw;
+
+    @media (max-width: 1000px) {
+        margin-right: 2vw;
+      }
+
+      @media (max-width: 700px) {
+        width: 50vw;
+      }
 `
 
 const Container =styled.div`
     display: flex;
     align-items: center;
     margin-left: 5vw;
+
+    @media (max-width: 1000px) {
+        margin-left: 2vw;
+      }
 `

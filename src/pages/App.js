@@ -74,7 +74,7 @@ class App extends Component {
                 <h2>{events[index].name}</h2>
                 <p>{date}</p>
             </Container>
-            <Wrapper>
+            <Wrapper secondary>
               <Event index={index} length={events.length} event={events[index]} pagination={this.pagination}/>
               <Location rsvp={rsvp.length} date={date} addRsvp={this.addRsvp} event={events[index]} />
             </Wrapper>
@@ -106,6 +106,20 @@ const Wrapper = styled.div`
       margin: auto;
       flex-direction: column;
       padding-bottom: 8vh;
+      @media (max-width: 1100px) {
+        width: 95vw;
+        
+      }
+
+    `};
+
+    ${props =>
+    props.secondary &&
+    css`
+      @media (max-width: 1100px) {
+        flex-direction: column;
+        margin: auto;
+      }
     `};
 `;
 
@@ -117,4 +131,12 @@ const Container = styled.div`
   padding: 1vh 1vw;
   position: sticky;
   top: 3vh;
+  z-index: 2;
+
+  @media (max-width: 1100px) {
+        width: 90vw;
+        margin: none;
+        top: 1vh;
+        padding: 1vh 2vw;
+      }
 `

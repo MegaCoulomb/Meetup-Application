@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import Modal from '../modal/index';
 
@@ -92,6 +92,12 @@ const Wrapper = styled.div`
   width: ${props => props.main && '50vw'};
   margin-top: ${props => props.main && '5vh'};
   flex-direction: ${props => props.secondary && 'column'};
+
+  ${props => props.main && css`
+    @media (max-width: 1100px) {
+        width: 80vw;
+      }
+  `};
 `;
 
 const Text = styled.p`
@@ -142,4 +148,9 @@ const Cont = styled.div`
   p:nth-of-type(1) {
     font-weight: 600;
   }
+
+  @media (max-width: 1100px) {
+    width: 20vw;
+    margin: 2%;
+      }
 `;

@@ -71,7 +71,8 @@ class Location extends Component {
             <Btn onClick={this.join}>{count}</Btn>
           </Container>
         </Modal>
-        <MapWrapper>
+        <MapWrapper secondary>
+          <>
           <Container main >
             <Img main src='https://www.flaticon.com/premium-icon/icons/svg/519/519869.svg' alt='Clock' />
             <Container>
@@ -88,6 +89,7 @@ class Location extends Component {
               <Text secondary>{city}, {state.toUpperCase()}</Text>
             </Container>
           </Container>
+          </>
           <GoogleMapReact center={center} defaultZoom={11}>
             <Marker lat={lat} lng={lon} />
           </GoogleMapReact>
@@ -111,8 +113,35 @@ const MapWrapper = styled.div`
   ${props => props.main && css`
     margin: 5vh 0 0 3vh;
     padding-bottom: 2vh;
-    border-radius: 10px;  
+    border-radius: 10px; 
+    @media (max-width: 1100px) {
+        position: relative;
+        height: 90vh;
+        width: inherit;
+        margin: auto;
+        margin-bottom: 5vh;
+      }
+      @media (max-width: 700px) {
+        margin: 0;
+      }
+
   `};
+
+  ${props =>
+    props.secondary &&
+    css`
+      @media (max-width: 1100px) {
+        position: relative;
+        margin: auto;
+        width: 70vw;
+        height: 50vh;
+      }
+      @media (max-width: 700px) {
+        /* margin: 0; */
+        width: 90vw;
+
+      }
+    `};
 
   h3 {
     text-align: center;
