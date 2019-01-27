@@ -111,7 +111,7 @@ const MapWrapper = styled.div`
   background: ${props => !props.main && '#fff'};
 
   ${props => props.main && css`
-    margin: 5vh 0 0 3vh;
+    margin: 5vh 0 0 3vw;
     padding-bottom: 2vh;
     border-radius: 10px; 
     @media (max-width: 1100px) {
